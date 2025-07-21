@@ -56,7 +56,7 @@
     }
 
     .stat-card {
-        @apply premium-card group cursor-pointer overflow-hidden relative;
+        @apply premium-card cursor-pointer overflow-hidden relative;
     }
 
     .stat-card::before {

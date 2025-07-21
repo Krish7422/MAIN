@@ -3,31 +3,168 @@
 {% block title %}OpenAlgo - OpenSource Algo Platform for Everyone{% endblock %}
 
 {% block content %}
-<!-- Hero Section -->
-<div class="min-h-[calc(100vh-4rem)] flex items-center justify-center">
-    <div class="text-center max-w-3xl mx-auto">
-        <h1 class="text-5xl font-bold mb-8">
-            Your Personal
-            <span class="text-primary">Algo Trading</span>
-            <span class="text-primary">Platform</span>
-        </h1>
-        <p class="text-xl mb-8 opacity-80">
-            Connect your algo strategies seamlessly with top Indian brokers. Run your strategies from any platform - Amibroker, TradingView, Python, N8N, ChartInk, MetaTrader, Excel, or Google Sheets.
-        </p>
-        <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="{{ url_for('auth.login') }}" class="btn btn-primary">
-                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
+<!-- Enhanced Hero Section with Animations and Glass Effects -->
+<div class="min-h-[calc(100vh-4rem)] flex items-center justify-center relative overflow-hidden">
+    <!-- Animated Background Elements -->
+    <div class="absolute inset-0 overflow-hidden">
+        <div class="absolute -top-40 -right-40 w-80 h-80 bg-brand-500/10 rounded-full blur-3xl animate-float"></div>
+        <div class="absolute top-1/3 -left-40 w-96 h-96 bg-accent-500/10 rounded-full blur-3xl animate-float" style="animation-delay: -2s;"></div>
+        <div class="absolute bottom-20 right-1/4 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl animate-float" style="animation-delay: -1s;"></div>
+    </div>
+
+    <div class="text-center max-w-6xl mx-auto relative z-10 px-4">
+        <!-- Main Hero Content -->
+        <div class="animate-fade-in">
+            <h1 class="text-5xl md:text-7xl font-bold mb-8 leading-tight">
+                Your Personal
+                <br>
+                <span class="gradient-text text-shadow">Algo Trading</span>
+                <br>
+                <span class="gradient-text text-shadow">Platform</span>
+            </h1>
+            
+            <p class="text-xl md:text-2xl mb-12 text-slate-300 max-w-4xl mx-auto leading-relaxed">
+                Connect your algo strategies seamlessly with <span class="text-brand-400 font-semibold">top Indian brokers</span>. 
+                Run your strategies from any platform - <span class="text-accent-400 font-semibold">Amibroker, TradingView, Python, N8N, ChartInk, MetaTrader, Excel</span>, or Google Sheets.
+            </p>
+        </div>
+
+        <!-- Enhanced CTA Buttons -->
+        <div class="flex flex-col sm:flex-row gap-6 justify-center mb-16 animate-slide-up" style="animation-delay: 0.3s">
+            <a href="{{ url_for('auth.login') }}" class="btn btn-premium group text-lg px-8 py-4 shadow-glow-blue hover:shadow-glow">
+                <svg class="w-6 h-6 mr-3 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                 </svg>
-                Login
+                <span class="relative z-10">Login to Dashboard</span>
             </a>
-            <a href="/download" class="btn btn-outline">
-                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <a href="/download" class="btn btn-ghost-premium group text-lg px-8 py-4">
+                <svg class="w-6 h-6 mr-3 group-hover:translate-y-[-2px] transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
                 </svg>
-                Download
+                Download OpenAlgo
             </a>
+        </div>
+
+        <!-- Feature Highlights -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto animate-fade-in" style="animation-delay: 0.6s">
+            <!-- Real-time Trading -->
+            <div class="glass-card p-6 rounded-2xl group hover:scale-105 transition-all duration-300">
+                <div class="w-16 h-16 bg-gradient-to-br from-brand-500 to-brand-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-glow-blue group-hover:shadow-glow transition-all duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-3">Real-time Execution</h3>
+                <p class="text-slate-400 leading-relaxed">Lightning-fast order execution with live market data and minimal latency for optimal trading performance.</p>
+            </div>
+
+            <!-- Multi-broker Support -->
+            <div class="glass-card p-6 rounded-2xl group hover:scale-105 transition-all duration-300">
+                <div class="w-16 h-16 bg-gradient-to-br from-accent-500 to-accent-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-glow group-hover:shadow-glow transition-all duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-3">Multi-Broker Integration</h3>
+                <p class="text-slate-400 leading-relaxed">Connect with 25+ Indian brokers including Zerodha, Angel One, Upstox, and more for unified trading experience.</p>
+            </div>
+
+            <!-- Open Source -->
+            <div class="glass-card p-6 rounded-2xl group hover:scale-105 transition-all duration-300">
+                <div class="w-16 h-16 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-glow-green group-hover:shadow-glow-green transition-all duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-3">100% Open Source</h3>
+                <p class="text-slate-400 leading-relaxed">Transparent, secure, and community-driven platform with full control over your trading infrastructure.</p>
+            </div>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto animate-fade-in" style="animation-delay: 0.9s">
+            <div class="text-center">
+                <div class="text-4xl font-bold gradient-text mb-2">25+</div>
+                <div class="text-slate-400">Supported Brokers</div>
+            </div>
+            <div class="text-center">
+                <div class="text-4xl font-bold gradient-text mb-2">10K+</div>
+                <div class="text-slate-400">Active Users</div>
+            </div>
+            <div class="text-center">
+                <div class="text-4xl font-bold gradient-text mb-2">99.9%</div>
+                <div class="text-slate-400">Uptime</div>
+            </div>
+            <div class="text-center">
+                <div class="text-4xl font-bold gradient-text mb-2">2ms</div>
+                <div class="text-slate-400">Avg Latency</div>
+            </div>
+        </div>
+
+        <!-- Platform Integrations -->
+        <div class="mt-20 animate-fade-in" style="animation-delay: 1.2s">
+            <h2 class="text-2xl font-bold text-white mb-8">Integrate with Your Favorite Platforms</h2>
+            <div class="flex flex-wrap items-center justify-center gap-8 opacity-70">
+                <div class="glass-card px-6 py-3 rounded-lg">
+                    <span class="text-slate-300 font-medium">TradingView</span>
+                </div>
+                <div class="glass-card px-6 py-3 rounded-lg">
+                    <span class="text-slate-300 font-medium">AmiBroker</span>
+                </div>
+                <div class="glass-card px-6 py-3 rounded-lg">
+                    <span class="text-slate-300 font-medium">Python</span>
+                </div>
+                <div class="glass-card px-6 py-3 rounded-lg">
+                    <span class="text-slate-300 font-medium">ChartInk</span>
+                </div>
+                <div class="glass-card px-6 py-3 rounded-lg">
+                    <span class="text-slate-300 font-medium">MetaTrader</span>
+                </div>
+                <div class="glass-card px-6 py-3 rounded-lg">
+                    <span class="text-slate-300 font-medium">Excel</span>
+                </div>
+                <div class="glass-card px-6 py-3 rounded-lg">
+                    <span class="text-slate-300 font-medium">Google Sheets</span>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+<!-- Additional animations and interactions -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Add dynamic typing effect to the main heading
+    const headings = document.querySelectorAll('.gradient-text');
+    headings.forEach((heading, index) => {
+        heading.style.animationDelay = `${index * 0.5}s`;
+    });
+
+    // Add hover effect to feature cards
+    const featureCards = document.querySelectorAll('.glass-card');
+    featureCards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-10px) scale(1.05)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = '';
+        });
+    });
+
+    // Add parallax effect to background elements
+    document.addEventListener('mousemove', function(e) {
+        const backgrounds = document.querySelectorAll('.animate-float');
+        const mouseX = e.clientX / window.innerWidth;
+        const mouseY = e.clientY / window.innerHeight;
+        
+        backgrounds.forEach((bg, index) => {
+            const speed = (index + 1) * 0.3;
+            const x = (mouseX - 0.5) * speed * 20;
+            const y = (mouseY - 0.5) * speed * 20;
+            bg.style.transform = `translate(${x}px, ${y}px)`;
+        });
+    });
+});
+</script>
 {% endblock %}

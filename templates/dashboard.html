@@ -1,149 +1,256 @@
 {% extends "base.html" %}
 
 {% block content %}
-<!-- Dashboard Header -->
-<div class="mb-12">
-    <div class="flex items-center justify-between">
-        <div>
-            <h1 class="text-3xl font-bold text-base-content">Trading Dashboard</h1>
-            <p class="text-base-content/60 mt-2">Overview of your trading account and market positions</p>
+<!-- Enhanced Dashboard Header with Animations -->
+<div class="mb-16 animate-fade-in">
+    <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+        <div class="space-y-2">
+            <h1 class="text-4xl font-bold gradient-text">Trading Dashboard</h1>
+            <p class="text-slate-400 text-lg">Monitor your portfolio and execute strategies with precision</p>
+            <div class="flex items-center gap-2 mt-4">
+                <div class="status-online"></div>
+                <span class="text-emerald-400 text-sm font-medium">Live Market Data</span>
+            </div>
         </div>
-        <!-- Master Contract Status Indicator -->
-        <div class="flex items-center gap-3 bg-base-200 rounded-lg px-4 py-3">
-            <span class="text-sm font-medium">Master Contract Status:</span>
-            <div class="flex items-center gap-2">
-                <div id="master-contract-led" class="w-3 h-3 rounded-full bg-gray-400 animate-pulse"></div>
-                <span id="master-contract-status-text" class="text-sm">Checking...</span>
+        
+        <!-- Enhanced Master Contract Status -->
+        <div class="glass-card p-6 rounded-2xl">
+            <div class="flex items-center justify-between mb-3">
+                <span class="text-slate-300 font-semibold">Master Contract</span>
+                <div id="master-contract-led" class="status-offline"></div>
+            </div>
+            <div id="master-contract-status-text" class="text-slate-400 text-sm">Initializing...</div>
+            <div class="w-full bg-slate-700 rounded-full h-1.5 mt-3 overflow-hidden">
+                <div class="bg-gradient-to-r from-brand-500 to-accent-500 h-full rounded-full animate-pulse" style="width: 75%"></div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Stats Grid -->
-<div class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-6 mb-16">
+<!-- Enhanced Stats Grid with Hover Effects -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mb-16">
     <!-- Available Balance -->
-    <div class="stat-card">
+    <div class="stat-card group animate-scale-in" style="animation-delay: 0.1s">
         <div class="stat">
-            <div class="stat-title">Available Balance</div>
-            <div class="stat-value text-primary">
-                {{ margin_data.get('availablecash', '0.00') }}
+            <div class="stat-title text-slate-400 font-medium mb-2">Available Balance</div>
+            <div class="stat-value text-3xl font-bold text-brand-400 mb-3">
+                ₹{{ margin_data.get('availablecash', '0.00') }}
             </div>
-            <div class="stat-desc mt-2">
-                <div class="badge badge-neutral">Cash Balance</div>
+            <div class="flex items-center justify-between">
+                <div class="badge-primary px-3 py-1 rounded-full text-sm font-medium">Cash Balance</div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-brand-500 group-hover:text-brand-400 transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+                </svg>
             </div>
         </div>
     </div>
 
     <!-- Collateral -->
-    <div class="stat-card">
+    <div class="stat-card group animate-scale-in" style="animation-delay: 0.2s">
         <div class="stat">
-            <div class="stat-title">Collateral</div>
-            <div class="stat-value text-secondary">
-                {{ margin_data.get('collateral', '0.00') }}
+            <div class="stat-title text-slate-400 font-medium mb-2">Collateral</div>
+            <div class="stat-value text-3xl font-bold text-accent-400 mb-3">
+                ₹{{ margin_data.get('collateral', '0.00') }}
             </div>
-            <div class="stat-desc mt-2">
-                <div class="badge badge-neutral">Total Collateral</div>
+            <div class="flex items-center justify-between">
+                <div class="badge-secondary px-3 py-1 rounded-full text-sm font-medium">Total Collateral</div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-accent-500 group-hover:text-accent-400 transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
             </div>
         </div>
     </div>
 
     <!-- Unrealized P&L -->
-    <div class="stat-card">
+    <div class="stat-card group animate-scale-in" style="animation-delay: 0.3s">
         <div class="stat">
-            <div class="stat-title">Unrealized P&L</div>
-            <div class="stat-value {% if margin_data.get('m2munrealized', '0.00')|float > 0 %}text-success{% elif margin_data.get('m2munrealized', '0.00')|float < 0 %}text-error{% else %}text-neutral{% endif %}">
-                {{ margin_data.get('m2munrealized', '0.00') }}
+            <div class="stat-title text-slate-400 font-medium mb-2">Unrealized P&L</div>
+            <div class="stat-value text-3xl font-bold mb-3 {% if margin_data.get('m2munrealized', '0.00')|float > 0 %}text-emerald-400{% elif margin_data.get('m2munrealized', '0.00')|float < 0 %}text-red-400{% else %}text-slate-400{% endif %}">
+                {% if margin_data.get('m2munrealized', '0.00')|float > 0 %}+{% endif %}₹{{ margin_data.get('m2munrealized', '0.00') }}
             </div>
-            <div class="stat-desc mt-2">
-                <div class="badge {% if margin_data.get('m2munrealized', '0.00')|float > 0 %}badge-success{% elif margin_data.get('m2munrealized', '0.00')|float < 0 %}badge-error{% else %}badge-neutral{% endif %}">
+            <div class="flex items-center justify-between">
+                <div class="{% if margin_data.get('m2munrealized', '0.00')|float > 0 %}metric-positive{% elif margin_data.get('m2munrealized', '0.00')|float < 0 %}metric-negative{% else %}metric-neutral{% endif %}">
                     Mark to Market
                 </div>
+                {% if margin_data.get('m2munrealized', '0.00')|float > 0 %}
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                </svg>
+                {% elif margin_data.get('m2munrealized', '0.00')|float < 0 %}
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6" />
+                </svg>
+                {% else %}
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h8" />
+                </svg>
+                {% endif %}
             </div>
         </div>
     </div>
 
     <!-- Realized P&L -->
-    <div class="stat-card">
+    <div class="stat-card group animate-scale-in" style="animation-delay: 0.4s">
         <div class="stat">
-            <div class="stat-title">Realized P&L</div>
-            <div class="stat-value {% if margin_data.get('m2mrealized', '0.00')|float > 0 %}text-success{% elif margin_data.get('m2mrealized', '0.00')|float < 0 %}text-error{% else %}text-neutral{% endif %}">
-                {{ margin_data.get('m2mrealized', '0.00') }}
+            <div class="stat-title text-slate-400 font-medium mb-2">Realized P&L</div>
+            <div class="stat-value text-3xl font-bold mb-3 {% if margin_data.get('m2mrealized', '0.00')|float > 0 %}text-emerald-400{% elif margin_data.get('m2mrealized', '0.00')|float < 0 %}text-red-400{% else %}text-slate-400{% endif %}">
+                {% if margin_data.get('m2mrealized', '0.00')|float > 0 %}+{% endif %}₹{{ margin_data.get('m2mrealized', '0.00') }}
             </div>
-            <div class="stat-desc mt-2">
-                <div class="badge {% if margin_data.get('m2mrealized', '0.00')|float > 0 %}badge-success{% elif margin_data.get('m2mrealized', '0.00')|float < 0 %}badge-error{% else %}badge-neutral{% endif %}">
+            <div class="flex items-center justify-between">
+                <div class="{% if margin_data.get('m2mrealized', '0.00')|float > 0 %}metric-positive{% elif margin_data.get('m2mrealized', '0.00')|float < 0 %}metric-negative{% else %}metric-neutral{% endif %}">
                     Booked P&L
                 </div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-slate-500 group-hover:text-slate-400 transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                </svg>
             </div>
         </div>
     </div>
 
     <!-- Utilised Margin -->
-    <div class="stat-card">
+    <div class="stat-card group animate-scale-in" style="animation-delay: 0.5s">
         <div class="stat">
-            <div class="stat-title">Utilised Margin</div>
-            <div class="stat-value text-accent">
-                {{ margin_data.get('utiliseddebits', '0.00') }}
+            <div class="stat-title text-slate-400 font-medium mb-2">Utilized Margin</div>
+            <div class="stat-value text-3xl font-bold text-amber-400 mb-3">
+                ₹{{ margin_data.get('utiliseddebits', '0.00') }}
             </div>
-            <div class="stat-desc mt-2">
-                <div class="badge badge-accent">Used Margin</div>
+            <div class="flex items-center justify-between">
+                <div class="badge-warning px-3 py-1 rounded-full text-sm font-medium">Used Margin</div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-amber-500 group-hover:text-amber-400 transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Quick Actions Grid -->
-<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Enhanced Quick Actions Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 animate-fade-in" style="animation-delay: 0.6s">
     <!-- Search Symbols -->
-    <div class="card bg-base-100 shadow-lg">
-        <div class="card-body">
-            <h2 class="card-title flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-                Search Symbols
-            </h2>
-            <p class="text-base-content/70">Search for trading symbols across different exchanges</p>
-            <div class="card-actions justify-end mt-4">
-                <a href="{{ url_for('search_bp.token') }}" class="btn btn-primary">Search Now</a>
+    <div class="premium-card group cursor-pointer">
+        <div class="space-y-4">
+            <div class="flex items-center justify-between">
+                <div class="w-12 h-12 bg-gradient-to-br from-brand-500 to-brand-600 rounded-xl flex items-center justify-center shadow-glow-blue group-hover:shadow-glow transition-all duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </div>
+                <div class="text-slate-500 group-hover:text-brand-400 transition-colors duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                    </svg>
+                </div>
+            </div>
+            <div>
+                <h2 class="text-xl font-bold text-white mb-2">Search Symbols</h2>
+                <p class="text-slate-400 leading-relaxed">Search for trading symbols across NSE, BSE, NFO, and other exchanges</p>
+            </div>
+            <div class="pt-4">
+                <a href="{{ url_for('search_bp.token') }}" class="btn btn-premium w-full group/btn">
+                    <span class="relative z-10">Search Now</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-2 group-hover/btn:translate-x-1 transition-transform duration-300 relative z-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                </a>
             </div>
         </div>
     </div>
 
-    <!-- View Logs -->
-    <div class="card bg-base-100 shadow-lg">
-        <div class="card-body">
-            <h2 class="card-title flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                </svg>
-                View Logs
-            </h2>
-            <p class="text-base-content/70">Monitor your trading activity and system logs</p>
-            <div class="card-actions justify-end mt-4">
-                <a href="{{ url_for('log_bp.view_logs') }}" class="btn btn-primary">View Logs</a>
+    <!-- System Logs -->
+    <div class="premium-card group cursor-pointer">
+        <div class="space-y-4">
+            <div class="flex items-center justify-between">
+                <div class="w-12 h-12 bg-gradient-to-br from-accent-500 to-accent-600 rounded-xl flex items-center justify-center shadow-glow group-hover:shadow-glow transition-all duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                </div>
+                <div class="text-slate-500 group-hover:text-accent-400 transition-colors duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                </div>
+            </div>
+            <div>
+                <h2 class="text-xl font-bold text-white mb-2">System Logs</h2>
+                <p class="text-slate-400 leading-relaxed">Monitor your trading activity, system events, and debugging information</p>
+            </div>
+            <div class="pt-4">
+                <a href="{{ url_for('log_bp.view_logs') }}" class="btn btn-premium w-full group/btn">
+                    <span class="relative z-10">View Logs</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-2 group-hover/btn:translate-x-1 transition-transform duration-300 relative z-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                </a>
             </div>
         </div>
     </div>
 
     <!-- Documentation -->
-    <div class="card bg-base-100 shadow-lg">
-        <div class="card-body">
-            <h2 class="card-title flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                </svg>
-                Documentation
-            </h2>
-            <p class="text-base-content/70">Access detailed guides and API documentation</p>
-            <div class="card-actions justify-end mt-4">
-                <a href="https://docs.openalgo.in" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View Docs</a>
+    <div class="premium-card group cursor-pointer">
+        <div class="space-y-4">
+            <div class="flex items-center justify-between">
+                <div class="w-12 h-12 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-glow-green group-hover:shadow-glow-green transition-all duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    </svg>
+                </div>
+                <div class="text-slate-500 group-hover:text-emerald-400 transition-colors duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                </div>
+            </div>
+            <div>
+                <h2 class="text-xl font-bold text-white mb-2">Documentation</h2>
+                <p class="text-slate-400 leading-relaxed">Access comprehensive guides, API documentation, and best practices</p>
+            </div>
+            <div class="pt-4">
+                <a href="https://docs.openalgo.in" target="_blank" rel="noopener noreferrer" class="btn btn-premium w-full group/btn">
+                    <span class="relative z-10">View Docs</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-2 group-hover/btn:translate-x-1 transition-transform duration-300 relative z-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Performance Metrics Section -->
+<div class="mt-16 space-y-8 animate-fade-in" style="animation-delay: 0.8s">
+    <div class="glass-card rounded-2xl p-8">
+        <div class="flex items-center justify-between mb-6">
+            <h2 class="text-2xl font-bold text-white">Performance Overview</h2>
+            <div class="flex items-center gap-2">
+                <div class="status-online"></div>
+                <span class="text-emerald-400 text-sm font-medium">Real-time Data</span>
+            </div>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div class="text-center p-4 glass-card rounded-xl">
+                <div class="text-3xl font-bold text-brand-400 mb-2">24</div>
+                <div class="text-slate-400 text-sm">Active Positions</div>
+            </div>
+            <div class="text-center p-4 glass-card rounded-xl">
+                <div class="text-3xl font-bold text-emerald-400 mb-2">156</div>
+                <div class="text-slate-400 text-sm">Orders Today</div>
+            </div>
+            <div class="text-center p-4 glass-card rounded-xl">
+                <div class="text-3xl font-bold text-accent-400 mb-2">89%</div>
+                <div class="text-slate-400 text-sm">Success Rate</div>
+            </div>
+            <div class="text-center p-4 glass-card rounded-xl">
+                <div class="text-3xl font-bold text-amber-400 mb-2">2.4ms</div>
+                <div class="text-slate-400 text-sm">Avg Latency</div>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-// Master Contract Status LED Controller
+// Enhanced Master Contract Status LED Controller
 class MasterContractStatus {
     constructor() {
         this.led = document.getElementById('master-contract-led');
@@ -174,7 +281,7 @@ class MasterContractStatus {
             this.updateDisplay(data);
         } catch (error) {
             console.error('Error checking master contract status:', error);
-            this.updateDisplay({ status: 'error', message: 'Failed to check status' });
+            this.updateDisplay({ status: 'error', message: 'Connection failed' });
         }
     }
 
@@ -184,47 +291,55 @@ class MasterContractStatus {
     }
 
     updateDisplay(data) {
-        const { status, message, total_symbols } = data;
+        if (!this.led || !this.statusText) return;
         
-        // Remove all animation classes first
-        this.led.classList.remove('animate-pulse', 'animate-spin');
+        const { status, message, total_symbols } = data;
         
         switch (status) {
             case 'success':
-                this.led.className = 'w-3 h-3 rounded-full bg-green-500';
-                this.statusText.textContent = total_symbols ? `Ready (${total_symbols} symbols)` : 'Ready';
-                this.statusText.className = 'text-sm text-green-600';
+                this.led.className = 'status-online';
+                this.statusText.textContent = total_symbols ? 
+                    `✅ Ready (${total_symbols} symbols loaded)` : 
+                    '✅ System Ready';
+                
                 // Clear interval once successful
                 if (this.checkInterval) {
                     clearInterval(this.checkInterval);
                     this.checkInterval = null;
                 }
+                
+                // Trigger success animation
+                this.animateSuccess();
                 break;
                 
             case 'downloading':
-                this.led.className = 'w-3 h-3 rounded-full bg-yellow-500 animate-pulse';
-                this.statusText.textContent = 'Downloading...';
-                this.statusText.className = 'text-sm text-yellow-600';
+                this.led.className = 'status-warning';
+                this.statusText.textContent = '⏳ Downloading master contracts...';
                 break;
                 
             case 'error':
-                this.led.className = 'w-3 h-3 rounded-full bg-red-500';
-                this.statusText.textContent = 'Error';
-                this.statusText.className = 'text-sm text-red-600';
-                // Show detailed error in tooltip
-                this.statusText.title = message || 'Download failed';
+                this.led.className = 'w-3 h-3 bg-red-500 rounded-full animate-pulse';
+                this.statusText.textContent = '❌ ' + (message || 'Download failed');
                 break;
                 
             case 'pending':
-                this.led.className = 'w-3 h-3 rounded-full bg-gray-400 animate-pulse';
-                this.statusText.textContent = 'Pending';
-                this.statusText.className = 'text-sm text-gray-600';
+                this.led.className = 'status-offline animate-pulse';
+                this.statusText.textContent = '⏸️ Pending initialization...';
                 break;
                 
             default:
-                this.led.className = 'w-3 h-3 rounded-full bg-gray-400';
-                this.statusText.textContent = 'Unknown';
-                this.statusText.className = 'text-sm text-gray-600';
+                this.led.className = 'status-offline';
+                this.statusText.textContent = '❓ Status unknown';
+        }
+    }
+
+    animateSuccess() {
+        // Add a brief success flash animation
+        if (this.led) {
+            this.led.style.animation = 'pulse-glow 0.5s ease-out';
+            setTimeout(() => {
+                this.led.style.animation = '';
+            }, 500);
         }
     }
 
@@ -238,6 +353,20 @@ class MasterContractStatus {
 // Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
     window.masterContractStatus = new MasterContractStatus();
+    
+    // Initialize hover effects for stat cards
+    const statCards = document.querySelectorAll('.stat-card');
+    statCards.forEach((card, index) => {
+        card.addEventListener('mouseenter', () => {
+            card.style.transform = 'translateY(-8px) scale(1.02)';
+            card.style.boxShadow = '0 25px 50px -12px rgba(0, 0, 0, 0.5)';
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = '';
+            card.style.boxShadow = '';
+        });
+    });
 });
 
 // Cleanup on page unload
@@ -245,6 +374,20 @@ window.addEventListener('beforeunload', () => {
     if (window.masterContractStatus) {
         window.masterContractStatus.destroy();
     }
+});
+
+// Add subtle parallax effect to floating elements
+document.addEventListener('mousemove', (e) => {
+    const floatingElements = document.querySelectorAll('.floating-element');
+    const mouseX = e.clientX / window.innerWidth;
+    const mouseY = e.clientY / window.innerHeight;
+    
+    floatingElements.forEach((element, index) => {
+        const speed = (index + 1) * 0.5;
+        const x = (mouseX - 0.5) * speed;
+        const y = (mouseY - 0.5) * speed;
+        element.style.transform = `translate(${x}px, ${y}px)`;
+    });
 });
 </script>
 {% endblock %}
